@@ -35,4 +35,27 @@ User.findOne({email:email}).then((savedUser)=>{
     console.log(err)
 })
 });
+
+router.post('/signin',(req,res)=>{
+    const{email, password} = req.body;
+    if(!email || !password){
+        return res.status(422).json({error:"Please Fill Out The Whole Form1"});
+    }
+    User.findOne({email:email}).then((savedUser)=>{
+    if(!savedUser){
+        return res.status(422).json({error:"Invalid Email Or Password"})
+    }
+    bcrypt.compare(password,savedUser.password).then(doMatch=>{
+        if(doMatch){
+            return res.json({message:"User Successfully SignedIn"})
+        }
+        else{
+            return res.status(422).json({error:"Invalid Email Or Password"})
+        }
+    }).catch(err=>{
+        console.log(err)
+})
+})
+})
+
 export default router;
