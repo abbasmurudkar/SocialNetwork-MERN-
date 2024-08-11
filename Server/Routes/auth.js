@@ -12,7 +12,7 @@ router.post('/signup',(req,res)=>{
 const {name, password, email} = req.body;
 
 if(!email || !password || !name){
-    return res.status(422).json({error:"Please fill out the whole form"});
+    return res.status(422).json({error:"Please Fill Out The Whole Form"});
 }
 User.findOne({email:email}).then((savedUser)=>{
     if(savedUser){
@@ -25,7 +25,7 @@ User.findOne({email:email}).then((savedUser)=>{
             name:name
         })
         user.save().then(user =>{
-            res.json({message:"Saved Successfullu on DB"})
+            res.json({message:"Sucessfully Register!!! "})
         }).catch(err=>{
             console.log(err)
         })

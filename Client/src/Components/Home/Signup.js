@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { Card } from "./Signin";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import M from 'materialize-css'
 const Signup = () => {
+  const navigate = useNavigate();
   const [name, Setname] = useState("");
   const [email, Setemail] = useState("");
   const [password, SetPassword] = useState("");
   // STATEFUNCTION
 
+  
   const inputchange = (e) => {
     Setname(e.target.value);
   };
@@ -22,20 +24,30 @@ const Signup = () => {
 //         PostData()
 //     }
 // }
-  const PostData = ()=>{
+   const PostData  = ()=>{
+    if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
+      M.toast({html: "Invalid Email",classes:"#ef5350 red lighten-1"})
+      return
+    }
     fetch("/signup",{
       method:"post",
       headers:{
         "Content-Type":"application/json"
       },
       body:JSON.stringify({
-        name:"",
-        email:"",
-        password:""
+        name:name,
+        email:email,
+        password:password
       })
 
     }).then(res=>res.json()).then(data=>{
-      console.log(data)
+      if(data.error){
+        M.toast({html: data.error,classes:"#ef5350 red lighten-1"})
+      }
+      else{
+        M.toast({html: data.message,classes:"#1de9b6 teal accent-3"})
+        navigate("/signin");
+      }
     })
   }
   return (
@@ -49,13 +61,13 @@ const Signup = () => {
           placeholder="Name"
         />
         <input
-          type="text"
+          type="email"
           placeholder="Email"
           value={email}
           onChange={OnsetEmail}
         />
         <input
-          type="text"
+          type="password"
           placeholder="password"
           value={password}
           onChange={OnsetPassword}
