@@ -32,11 +32,13 @@ function Signin() {
       })
 
     }).then(res=>res.json()).then(data=>{
+      console.log(data)
       if(data.error){
         M.toast({html: data.error,classes:"#ef5350 red lighten-1"})
       }
       else{
-        M.toast({html: data.message,classes:"#1de9b6 teal accent-3"})
+
+        M.toast({html: "Successfully SignedIn",classes:"#1de9b6 teal accent-3"})
         navigate("/");
       }
     })
