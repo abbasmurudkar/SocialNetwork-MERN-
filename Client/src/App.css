@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap');
+
+/* .bg{
+  background-color:linear-gradient(to right, white, rgba(255,0,0,1)) ;
+  color: white !important;
+} */
+.brand-logo, h2{
+  font-family: "Grand Hotel", cursive;
+}
+.input-field input[type=text]:focus {
+  border-bottom: 1px solid #dc6262 !important;
+  box-shadow: 0 1px 0 0 #d05d5d !important;
+}
