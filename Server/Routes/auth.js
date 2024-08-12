@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import '../../Server/models/user.js'
 import bcrypt from "bcryptjs"
 import jwt from 'jsonwebtoken'
-
+import { SecretValues } from "../Key.js";
 const router = express.Router();
 const User = mongoose.model("User")
 router.get('/',(req,res)=>{
@@ -49,7 +49,7 @@ router.post('/signin',(req,res)=>{
     }
     bcrypt.compare(password,savedUser.password).then(doMatch=>{
         if(doMatch){
-            const token = jwt.sign({_id:savedUser._id},'secret')   //creating token for the particular user using jwt (jason web token) so that user can easily work or request n numbers of services using same token otherwise if the token doesnt match the server would not provide services
+            const token = jwt.sign({_id:savedUser._id},SecretValues)   //creating token for the particular user using jwt (jason web token) so that user can easily work or request n numbers of services using same token otherwise if the token doesnt match the server would not provide services
             const {_id,name,email} = savedUser;
             res.json({token,user:{_id,name,email}})
             // return res.json({message:"User Successfully SignedIn"})
